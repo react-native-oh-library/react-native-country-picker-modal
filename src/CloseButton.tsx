@@ -88,10 +88,33 @@ const CloseButtonIOS: React.FC<CloseButtonProps> = (props) => {
     </View>
   )
 }
+const CloseButtonHMOS: React.FC<CloseButtonProps> = (props) => {
+  let closeImage = require('./assets/images/close.ios.png')
+
+  if (props.image) {
+    closeImage = props.image
+  }
+  const { onBackgroundTextColor } = useTheme()
+  return (
+    <View style={[styles.container, props.style]}>
+      <TouchableOpacity onPress={props.onPress}>
+        <Image
+          source={closeImage}
+          style={[
+            styles.imageStyle,
+            props.imageStyle,
+            { tintColor: onBackgroundTextColor },
+          ]}
+        />
+      </TouchableOpacity>
+    </View>
+  )
+}
 
 export default Platform.select({
   ios: CloseButtonIOS,
   android: CloseButtonAndroid,
   web: CloseButtonIOS,
+  harmony: CloseButtonHMOS,
   default: CloseButtonIOS,
 })
